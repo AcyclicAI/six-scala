@@ -1,6 +1,6 @@
 package ai.acyclic.six.spark
 
-class Sanity extends SparkUnitTest {
+class Sanity extends SparkEnvSpec {
 
   it("simple") {
 

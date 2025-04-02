@@ -1,6 +1,6 @@
 package ai.acyclic.six.verification
 
-import org.tribbloid.scaffold.BaseSpec
+import ai.acyclic.six.scaffold.BaseSpec
 
 import scala.compiletime.testing.typeCheckErrors
 

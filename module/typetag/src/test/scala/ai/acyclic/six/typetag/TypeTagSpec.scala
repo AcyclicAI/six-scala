@@ -1,6 +1,6 @@
 package ai.acyclic.six.typetag
 
-import org.tribbloid.scaffold.BaseSpec
+import ai.acyclic.six.scaffold.BaseSpec
 
 class TypeTagSpec extends BaseSpec {
   import TypeTagSpec.*

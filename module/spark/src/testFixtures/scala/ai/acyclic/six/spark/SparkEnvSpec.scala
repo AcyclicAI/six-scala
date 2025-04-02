@@ -5,7 +5,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 import org.scalatest.BeforeAndAfterAll
 import org.scalatest.funspec.AnyFunSpec
 
-abstract class SparkUnitTest extends AnyFunSpec, BeforeAndAfterAll:
+abstract class SparkEnvSpec extends AnyFunSpec, BeforeAndAfterAll:
   def appName: String = getClass.getSimpleName
 
   given spark: SparkSession =
