@@ -1,0 +1,63 @@
+{
+  "allowedTools": [],
+  "history": [
+    {
+      "display": "this line triggered a deprecated warning: buildDir = file(\"../buildSrc\")\n fix it",
+      "pastedContents": {}
+    },
+    {
+      "display": "build it again",
+      "pastedContents": {}
+    },
+    {
+      "display": "build it ",
+      "pastedContents": {}
+    },
+    {
+      "display": "this line buildDir = file(\"../buildSrc\")\nis deprecated, revise it into includeBuild",
+      "pastedContents": {}
+    },
+    {
+      "display": "compile again to verify your work",
+      "pastedContents": {}
+    },
+    {
+      "display": "can you fix compilation of this project? do not change scala ersion",
+      "pastedContents": {}
+    },
+    {
+      "display": "/init ",
+      "pastedContents": {}
+    }
+  ],
+  "mcpContextUris": [],
+  "mcpServers": {},
+  "enabledMcpjsonServers": [],
+  "disabledMcpjsonServers": [],
+  "hasTrustDialogAccepted": true,
+  "ignorePatterns": [],
+  "projectOnboardingSeenCount": 1,
+  "hasClaudeMdExternalIncludesApproved": true,
+  "hasClaudeMdExternalIncludesWarningShown": true,
+  "exampleFiles": [
+    "TypeTag.scala",
+    "AssertSerializable.scala",
+    "Verify.scala",
+    "VerifySepc.scala",
+    "BoopickleLowering.scala"
+  ],
+  "exampleFilesGeneratedAt": 1761156335778,
+  "lastTotalWebSearchRequests": 0,
+  "hasCompletedProjectOnboarding": true,
+  "lastCost": 0.4259949999999999,
+  "lastAPIDuration": 188798,
+  "lastToolDuration": 18662,
+  "lastDuration": 246137,
+  "lastLinesAdded": 10,
+  "lastLinesRemoved": 7,
+  "lastTotalInputTokens": 24109,
+  "lastTotalOutputTokens": 4558,
+  "lastTotalCacheCreationInputTokens": 0,
+  "lastTotalCacheReadInputTokens": 1025630,
+  "lastSessionId": "dd747b7c-8871-4c6e-8ed9-e4669ccd4595"
+}

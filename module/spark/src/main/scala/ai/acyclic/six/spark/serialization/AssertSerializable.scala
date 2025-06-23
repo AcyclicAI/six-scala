@@ -12,7 +12,7 @@ case class AssertSerializable[T <: Any](
 ) {
   import AssertSerializable.*
 
-  @transient implicit lazy val ctg: ClassTag[T] = ClassTag(element.getClass)
+  @transient given ctg: ClassTag[T] = ClassTag(element.getClass)
 
   def on(
       condition: (T, T) => Any
@@ -40,23 +40,15 @@ case class AssertSerializable[T <: Any](
       case Failure(ee) => ee
     }
 
-    if (errors.nonEmpty)
-      throw new AssertionError(
-        {
-          val header = s"multiple errors [${errors.size}]\n"
-          val body = errors
-            .map { e =>
-              "- " + e.getMessage
-            }
-            .mkString("\n")
-          header + body
-        },
-        errors.head
-      ) {
-
-        val causes: Seq[Throwable] = errors
-
-      }
+    require(errors.isEmpty, {
+      val header = s"multiple errors [${errors.size}]\n"
+      val body = errors
+        .map { e =>
+          "- " + e.getMessage
+        }
+        .mkString("\n")
+      new AssertionError(header + body, errors.head)
+    })
   }
 
   def weakly(): Unit = {

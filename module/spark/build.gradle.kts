@@ -3,7 +3,7 @@ val vs = versions()
 dependencies {
 //    testFixturesApi(project(":spark:spark-test-fixtures"))
 
-    api("org.apache.spark:spark-core_2.13:3.5.4")
+    api("org.apache.spark:spark-core_2.13:4.1.1")
 //    api("org.apache.spark:spark-core_2.13:4.0.0-preview2")
 
 // https://mvnrepository.com/artifact/org.virtuslab/iskra

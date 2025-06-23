@@ -6,21 +6,24 @@ project(":six").projectDir = file("module")
 include(
     ":six:typetag",
     ":six:unused",
-    ":six:spark"
+    ":six:spark",
+    ":six:congruence"
 )
 
 pluginManagement {
-    resolutionStrategy {
-        eachPlugin {
-            if (requested.id.id.startsWith("ai.acyclic")) {
-                useModule("ai.acyclic:buildSrc:1.0-SNAPSHOT")
-            }
-        }
-    }
     repositories {
         gradlePluginPortal()
         mavenCentral()
-        // maven("https://dl.bintray.com/kotlin/kotlin-dev")
+    }
+    includeBuild("../buildSrc") {
+        name = "shared-build-logic"
+    }
+}
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
     }
 }
 

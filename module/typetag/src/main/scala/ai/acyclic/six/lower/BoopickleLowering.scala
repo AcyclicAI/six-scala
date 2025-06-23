@@ -53,6 +53,9 @@ object BoopickleLowering {
 
   object Implicits {
 
-    given only[T: Pickler]: BoopickleLowering[T] = BoopickleLowering[T]()
+    given [T](
+        using
+        Pickler[T]
+    ): BoopickleLowering[T] = BoopickleLowering[T]()
   }
 }

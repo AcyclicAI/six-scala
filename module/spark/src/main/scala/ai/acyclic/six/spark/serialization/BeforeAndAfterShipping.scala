@@ -33,7 +33,8 @@ object BeforeAndAfterShipping {
 
   object Trigger {
 
-    implicit def unbox[T <: BeforeAndAfterShipping](v: Trigger[T]): T = v.value
+    // given Conversion[Trigger[T], T] => v => v.value
+// TODO: Fix given syntax for Scala 3.7
   }
 
   // TODO: merge into SerializerOverride as "Locker"
