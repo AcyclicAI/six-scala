@@ -7,10 +7,7 @@ object Verify {
 
     val errors = testing.typeCheckErrors(code)
 
-    if (errors.isEmpty) {
-      throw new IllegalArgumentException("Expected type errors but got None")
-    }
-    ()
+    require(!errors.isEmpty, "Expected type errors but got None")
   }
 
   // from

@@ -31,7 +31,7 @@ object JavaLowering {
 
   object Implicits {
 
-    given only[T <: Serializable: Type]: JavaLowering[T] = JavaLowering[T]()
+    given only: [T <: Serializable] => (Type[T]) => JavaLowering[T] = JavaLowering[T]()
   }
 }
 
