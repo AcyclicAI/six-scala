@@ -14,3 +14,10 @@ pluginManagement.repositories {
     mavenCentral()
     // maven("https://dl.bintray.com/kotlin/kotlin-dev")
 }
+
+includeBuild("../buildSrc") {
+    name = "shared-build-logic"
+    dependencySubstitution {
+        substitute(module("ai.acyclic:buildSrc")).using(project(":"))
+    }
+}
