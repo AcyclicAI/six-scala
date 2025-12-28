@@ -9,15 +9,19 @@ include(
     ":six:spark"
 )
 
-pluginManagement.repositories {
-    gradlePluginPortal()
-    mavenCentral()
-    // maven("https://dl.bintray.com/kotlin/kotlin-dev")
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+    }
+    includeBuild("../buildSrc") {
+        name = "shared-build-logic"
+    }
 }
 
-includeBuild("../buildSrc") {
-    name = "shared-build-logic"
-    dependencySubstitution {
-        substitute(module("ai.acyclic:buildSrc")).using(project(":"))
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
     }
 }
