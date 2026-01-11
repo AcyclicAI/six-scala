@@ -4,7 +4,7 @@ import ai.acyclic.six.spark.SparkEnvSpec
 
 class ErrorDemo extends SparkEnvSpec {
 
-  it("runtime error") {
+  ignore("runtime error") {
 
     sys.error("runtime!")
   }

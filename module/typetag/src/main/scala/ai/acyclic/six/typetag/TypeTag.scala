@@ -113,6 +113,28 @@ case class TypeTag[T](tastyBinary: List[String])(
   }
 
   @transient lazy val runtimeClass: Class[T] = Class.forName(runtimeClassName).asInstanceOf[Class[T]]
+
+  // For type equality, compare based on the string representation
+  // which includes full type information including parameters
+  override def equals(obj: Any): Boolean = {
+    val result = obj match
+      case that: TypeTag[_] =>
+        val thisStr = this.toString
+        val thatStr = that.toString
+        val eq = thisStr == thatStr
+        if (!eq) {
+          println(s"DEBUG: TypeTag.equals failed:")
+          println(s"  this.toString = [$thisStr]")
+          println(s"  that.toString = [$thatStr]")
+          println(s"  this.tastyBinary.size = ${this.tastyBinary.size}")
+          println(s"  that.tastyBinary.size = ${that.tastyBinary.size}")
+        }
+        eq
+      case _ => false
+    result
+  }
+
+  override def hashCode(): Int = toString.hashCode()
 }
 
 object TypeTag {
