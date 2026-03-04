@@ -33,8 +33,8 @@ object BeforeAndAfterShipping {
 
   object Trigger {
 
-    // given Conversion[Trigger[T], T] => v => v.value
-// TODO: Fix given syntax for Scala 3.7
+    given [T <: BeforeAndAfterShipping]: Conversion[Trigger[T], T] with
+      override def apply(v: Trigger[T]): T = v.value
   }
 
   // TODO: merge into SerializerOverride as "Locker"

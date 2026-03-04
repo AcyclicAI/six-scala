@@ -13,8 +13,8 @@ import scala.quoted.runtime.impl.{QuotesImpl, SpliceScope, TypeImpl}
 import scala.runtime.ScalaRunTime
 
 case class TypeTag[T](tastyBinary: List[String])(
-    @transient typeTreeAtCreation: tpd.Tree = null, // will be discarded after compilation
-    @transient ctxAtCreation: Context = null
+    @transient typeTreeAtCreation: tpd.Tree | Null = null, // discarded after compilation
+    @transient ctxAtCreation: Context | Null = null
 ) extends Serializable {
 
   // not serializable
@@ -24,11 +24,11 @@ case class TypeTag[T](tastyBinary: List[String])(
   ) {
 
     lazy val typeTree: tpd.Tree = {
-      Option(typeTreeAtCreation).getOrElse {
-
-        val tree = PickledQuotes.unpickleTypeTree(tastyBinary, PickledQuotes.TypeHole.V2(null))
-        tree
-      }
+      typeTreeAtCreation match
+        case null =>
+          val tree = PickledQuotes.unpickleTypeTree(tastyBinary, PickledQuotes.TypeHole.V2(null))
+          tree
+        case existing => existing
     }
 
     def rebuild(): TypeTag[T] = {
@@ -44,7 +44,7 @@ case class TypeTag[T](tastyBinary: List[String])(
 
     lazy val className: String = {
 
-      AtCreation.dottyType.classSymbol.binaryClassName
+      dottyType.classSymbol.binaryClassName
     }
 
     object Printers {
@@ -57,17 +57,32 @@ case class TypeTag[T](tastyBinary: List[String])(
 
           import dotty.tools.dotc.core.Decorators.show
 
-          p.toText(typeTreeAtCreation).show
+          p.toText(typeTree).show
         }
       }
     }
 
   }
 
-  @transient private val AtCreation = AtContext()(
-    using
-    ctxAtCreation
-  )
+  @transient private lazy val AtCreation: AtContext | Null =
+    ctxAtCreation match
+      case null => null
+      case ctx =>
+        AtContext()(
+          using
+          ctx
+        )
+
+  private def withAtContext[A: ToExpr](f: AtContext => A): A = {
+    AtCreation match
+      case null =>
+        InDefaultStage.stage.run[A] {
+          case q: QuotesImpl =>
+            given Quotes = q
+            Expr(f(AtContext()(using q.ctx)))
+        }
+      case atCtx => f(atCtx)
+  }
 
   case class InStage(stage: staging.Compiler) {
 
@@ -96,20 +111,24 @@ case class TypeTag[T](tastyBinary: List[String])(
 
   object InDefaultStage extends InStage(TypeTag.defaultRuntimeStage)
 
-  import AtCreation.Printers.*
-
   val toString_builtIn: String = {
 
-    builtIn.showString
+    withAtContext { atCtx =>
+      import atCtx.Printers.*
+      builtIn.showString
+    }
   }
 
   override val toString: String = {
 
-    noColor.showString
+    withAtContext { atCtx =>
+      import atCtx.Printers.*
+      noColor.showString
+    }
   }
 
   private val runtimeClassName: String = {
-    AtCreation.className
+    withAtContext(_.className)
   }
 
   @transient lazy val runtimeClass: Class[T] = Class.forName(runtimeClassName).asInstanceOf[Class[T]]
