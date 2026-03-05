@@ -79,7 +79,14 @@ case class TypeTag[T](tastyBinary: List[String])(
         InDefaultStage.stage.run[A] {
           case q: QuotesImpl =>
             given Quotes = q
-            Expr(f(AtContext()(using q.ctx)))
+            Expr(
+              f(
+                AtContext()(
+                  using
+                  q.ctx
+                )
+              )
+            )
         }
       case atCtx => f(atCtx)
   }
@@ -162,7 +169,10 @@ object TypeTag {
 
 //  lazy val currentContext = currentStage.run { q =>
 //    given Quotes = q
-  given lowering[T](using Type[TypeTag[T]]): ToExpr[TypeTag[T]] = new JavaLowering[TypeTag[T]]
+  given lowering[T](
+      using
+      Type[TypeTag[T]]
+  ): ToExpr[TypeTag[T]] = new JavaLowering[TypeTag[T]]
 
   def compile[T]()(
       using
